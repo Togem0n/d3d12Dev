@@ -35,13 +35,18 @@ void D3D12HelloWorld::LoadPipeline()
         }
     }
 #endif
+    // The IDXGIFactory interface represents a factory object that allows you to enumerateand create DXGI objects, such as adapters, swap chains, and surfaces.
 	ComPtr<IDXGIFactory4> factory;
 	ThrowIfFailed(CreateDXGIFactory2(dxgiFactoryFlags, IID_PPV_ARGS(&factory)));
     if (m_useWarpDevice)
     {
+        // An "adapter" refers to a physical or virtual device that is capable of rendering graphics. 
+        // It represents a specific hardware or software component that provides the necessary resources
+        // and capabilities for rendering graphics on a computer system.
         ComPtr<IDXGIAdapter> warpAdapter;
         ThrowIfFailed(factory->EnumWarpAdapter(IID_PPV_ARGS(&warpAdapter)));
 
+        // You'll typically need to interact with the adapter to create device contexts, allocate resources like buffers and textures, and issue rendering commands.
         ThrowIfFailed(D3D12CreateDevice(
             warpAdapter.Get(),
             D3D_FEATURE_LEVEL_11_0,
@@ -60,7 +65,8 @@ void D3D12HelloWorld::LoadPipeline()
         ));
     }
 
-    // describe and create the command queue
+    // Command queue acts as a buffer between GPU and CPU
+    // Each command queue is associated with a specific type of command list, such as a direct command list or a compute command list.
     D3D12_COMMAND_QUEUE_DESC queueDesc = {};
     queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
     queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
